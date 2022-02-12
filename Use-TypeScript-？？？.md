@@ -106,3 +106,24 @@ const cor2 =():number =>{
 }
 ```
 
+### 定义回调函数
+
+当想传一个函数，类型可为Function
+
+```
+useAxios("1",()=>{})
+*callBack*:Function
+```
+
+### hooks中useState用法
+
+```
+function useState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>];
+```
+
+可以这样用
+
+```
+const [ data,setData] = useState<定义的类型>（）
+```
+

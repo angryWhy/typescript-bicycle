@@ -4,6 +4,7 @@ import Nav from "./Common/Nav/index";
 
 import { Row, Col } from "antd";
 import 'antd/dist/antd.css';
+import "antd/dist/antd.less"
 
 import {AppWrapper} from "./app-style"
 function App() {
