@@ -5,7 +5,7 @@ export const AppWrapper = styled.div`
     height: calc(100vh);
 }
 .main{
-    /* height: calc(100vh); */
+    height: calc(100vh);
     background-color: #c8d7f8;
     overflow: auto;
     
@@ -15,6 +15,7 @@ export const AppWrapper = styled.div`
     padding: 20px;
 }
 .footer{
+    margin-top: 30px;
     padding: 0 20px;
 }
 `

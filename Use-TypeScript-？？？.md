@@ -168,6 +168,10 @@ function counterReducer(state: CountState, action: CountAction) ：CountState {
 
 用法：https://juejin.cn/post/6844903846607585293
 
+### Object【】调用对象方法，报错
+
+文档地址：https://blog.csdn.net/qq_45301392/article/details/118343769
+
 # 额外的
 
 ### Styled-components，没有提示
