@@ -2,16 +2,20 @@ import React, { memo,useState } from 'react'
 import {HeaderWrapper} from "./style"
 import { Button } from 'antd'
 import { useAxios } from '../../utils/useAxios'
-const Header = memo(() => {
-  const [data, setData] = useState()
+interface HeaderProps{
+  className?:string
+}
+const Header:React.FC<HeaderProps> = memo((props) => {
+  const {className} = props
+  const [data, setData] = useState<{name:string}>()
+  //取出的用户名
   useAxios("./api/mock.json",setData)
- console.log(data);
- 
   return (
-    <HeaderWrapper>
-        <div>
-          <span>欢迎</span>
-          <Button type='primary'>111</Button>
+    <HeaderWrapper className={className}>
+        <div className='right-content'>
+          <span>欢迎<a href='/todo'>{data}</a></span>
+          
+          <Button type='primary'>退出</Button>
         </div>
     </HeaderWrapper>
   )

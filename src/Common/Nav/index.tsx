@@ -14,13 +14,14 @@ interface NavProps {
 }
 const { SubMenu } = Menu;
 const Nav:React.FC<NavProps> = memo((props) => {
-  const {className} = props
   //???返回值为ReactNode，？？？？
   const renderMenu = (menuList:menu[]) : ReactNode[] =>{
+    let i=0
     const newList = menuList.map((item,index)=>{
       if(item.children){
+        i++
         return(
-           <SubMenu key={item.title} title={item.title}>
+           <SubMenu key={`sub${i}`} title={item.title}>
              {
                   renderMenu(item.children)
              }
@@ -40,7 +41,7 @@ const Nav:React.FC<NavProps> = memo((props) => {
   }
   return (
     <NavWrapper className="navleft">
-      <Menu theme="dark">
+      <Menu mode="inline" defaultOpenKeys={['sub1']}>
       {
         renderMenu(menuList)
       }

@@ -127,3 +127,49 @@ function useState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | 
 const [ data,setData] = useState<定义的类型>（）
 ```
 
+### hooks中useReducer用法
+
+```javascript
+//枚举类型，相当于常量
+enum CountActionKind {
+  INCREASE = 'INCREASE',
+  DECREASE = 'DECREASE',
+}
+//定义Action类型
+interface CountAction {
+  type: CountActionKind;
+  payload: number;
+}
+
+//state类型
+interface CountState {
+  count: number;
+}
+
+//state类型对应state，action对应action
+function counterReducer(state: CountState, action: CountAction) ：CountState {
+  const { type, payload } = action;
+  switch (type) {
+    case CountActionKind.INCREASE:
+      return {
+        ...state,
+        value: state.count + payload,
+      };
+    case CountActionKind.DECREASE:
+      return {
+        ...state,
+        value: state.count - payload,
+      };
+    default:
+      return state;
+  }
+}
+```
+
+用法：https://juejin.cn/post/6844903846607585293
+
+# 额外的
+
+### Styled-components，没有提示
+
+下载插件vscode-styled-components 
