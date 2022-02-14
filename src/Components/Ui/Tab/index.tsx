@@ -50,8 +50,11 @@ const Tabui: React.FC<TabProps> = memo(() => {
     const onChange = (activeKey: string) => {
         setActiveKey(activeKey)
     }
-    const onEdit = () => {
-        add()
+    const onEdit = (e: string | React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>,action:string) => {
+        if(action==="add"){
+            add()
+        }
+        
     }
     const add = () => {
         const { panes } = state;
@@ -121,7 +124,7 @@ const Tabui: React.FC<TabProps> = memo(() => {
                     type="editable-card"
                     onChange={onChange}
                     activeKey={activeKey}
-                    onEdit={e => { onEdit() }}
+                    onEdit={onEdit}
                 >
                     {state.panes.map(pane => (
                         <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>
