@@ -1,6 +1,5 @@
 import React, { memo,useState } from 'react'
 import { Card, Modal } from 'antd';
-import Footer from '../../../Common/Footer/index';
 
 const { Meta } = Card;
 interface GalleryProps {
