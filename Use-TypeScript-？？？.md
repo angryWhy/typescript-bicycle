@@ -129,6 +129,14 @@ const [ data,setData] = useState<定义的类型>（）
 
 ### hooks中useReducer用法
 
+步骤：
+
+1.定义好state子元素类型，在定义state类型
+
+2.useReducer和平常一样
+
+3.注意reducer方法，state：State类型，action：定义action类型，需要返回State类型
+
 ```javascript
 //枚举类型，相当于常量
 enum CountActionKind {

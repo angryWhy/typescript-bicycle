@@ -40,7 +40,7 @@ const All: React.FC<MessageProps> = memo(() => {
       placement,
     });
   }; 
-  const openNotificationWithIcon = (type:any) => {
+  const openNotificationWithIcon = (type:string) => {
     notification.success({
       message: 'Notification Title',
       description:
