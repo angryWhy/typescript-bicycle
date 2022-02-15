@@ -7,7 +7,7 @@ import 'antd/dist/antd.css';
 import "antd/dist/antd.less"
 
 import { AppWrapper } from "./app-style"
-import Alert from './Components/Form/Register/index';
+import Alert from './Components/Table/BaseTable/index';
 function App() {
   return (
     <AppWrapper className="App">
@@ -19,9 +19,7 @@ function App() {
           <Header />
           <Row className="content main">
             <Col span={24}>
-
               <Alert />
-
             </Col>
           </Row>
           <Footer className="footer" />

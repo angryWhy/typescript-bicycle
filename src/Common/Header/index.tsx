@@ -7,9 +7,9 @@ interface HeaderProps{
 }
 const Header:React.FC<HeaderProps> = memo((props) => {
   const {className} = props
-  const [data, setData] = useState<{name:string}>()
+  const [data, setData] = useState<string>()
   //取出的用户名
-  useAxios("./api/mock.json",setData)
+  useAxios("./api/mock.json",setData,"name")
   return (
     <HeaderWrapper className={className}>
         <div className='right-content'>

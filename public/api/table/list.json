@@ -2,19 +2,95 @@
   "code": 0,
   "message": "",
   "result": {
-    "list|10": [{
-      "id|+1": 1,
-      "username": "@cname",
-      "sex|1-2": 1,
-      "state|1-5": 1,
-      "interest|1-8": 1,
-      "isMarried|0-1": 1,
+    "list": [{
+      "id": 1,
+      "userName": "@cname",
+      "sex": 1,
+      "state": 1,
+      "interest": 1,
+      "isMarried": 1,
       "birthday": "2000-01-01",
       "address": "北京市海淀区",
-      "time": "09:00:00"
-    }],
-    page: 1,
-    page_size: 10,
-    total_count: 30
+      "time": "09:00:00",
+      "key":0
+    },
+    {
+      "id": 2,
+      "userName": "@cname",
+      "sex": 1,
+      "state": 1,
+      "interest": 1,
+      "isMarried": 1,
+      "birthday": "2000-01-01",
+      "address": "北京市海淀区",
+      "time": "09:00:00",
+      "key":1
+    },
+    {
+      "id": 3,
+      "userName": "@cname",
+      "sex": 1,
+      "state": 1,
+      "interest": 1,
+      "isMarried": 1,
+      "birthday": "2000-01-01",
+      "address": "北京市海淀区",
+      "time": "09:00:00",
+      "key":2
+    },
+    {
+      "id":4,
+      "userName": "@cname",
+      "sex": 1,
+      "state": 1,
+      "interest": 1,
+      "isMarried": 1,
+      "birthday": "2000-01-01",
+      "address": "北京市海淀区",
+      "time": "09:00:00",
+      "key":3
+    },
+    {
+      "id": 5,
+      "userName": "@cname",
+      "sex": 1,
+      "state": 1,
+      "interest": 1,
+      "isMarried": 1,
+      "birthday": "2000-01-01",
+      "address": "北京市海淀区",
+      "time": "09:00:00",
+      "key":4
+    },
+    {
+      "id": 6,
+      "userName": "@cname",
+      "sex": 1,
+      "state": 1,
+      "interest": 1,
+      "isMarried": 1,
+      "birthday": "2000-01-01",
+      "address": "北京市海淀区",
+      "time": "09:00:00",
+      "key":5
+    },
+    {
+      "id": 7,
+      "userName": "@cname",
+      "sex": 1,
+      "state": 1,
+      "interest": 1,
+      "isMarried": 1,
+      "birthday": "2000-01-01",
+      "address": "北京市海淀区",
+      "time": "09:00:00",
+      "key":6
+    }
+  
+  ],
+    "page": 1,
+    "page_size": 10,
+    "total_count": 30,
+    "key":8
   }
 }

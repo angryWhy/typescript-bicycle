@@ -63,13 +63,28 @@ const todo: TodoPreview = {
 };
 ```
 
+### 一些技巧
+
+#### 关于对象方面
+
+定义多个字符串或者数值属性类型
+
+```typescript
+type Obj = {
+    //字符串键，字符串值
+[key:string]:string
+}
+```
+
+
+
 # 项目中
 
 ### 自定义组件，样式不生效？
 
 问题描述：
 
-```
+```typescript
 <Col span={4}>
           <Nav className="navleft"/>
           //自定义Nav组件，className，报错
@@ -78,7 +93,7 @@ const todo: TodoPreview = {
 
 分析：className相当于传统的Props，需要在Nav定义一下，然后再使用。
 
-```
+```typescript
 interface NavProps {
   className?:string
 }
@@ -90,14 +105,14 @@ Nav:React.FC<NavProps>
 
 ##### 错误写法
 
-```
+```typescript
 const err:返回值=（参数）=>{}
 //字面量和函数两种写法
 ```
 
 ##### 正确写法
 
-```
+```typescript
 //写法一，简单来说，函数名后面{}里定义了完整的函数类型
 const cor :{(参数):number[]}=()=>{}
 
@@ -117,13 +132,14 @@ useAxios("1",()=>{})
 
 ### hooks中useState用法
 
-```
+```typescript
 function useState<S = undefined>(): [S | undefined, Dispatch<SetStateAction<S | undefined>>];
+const [count , setCount] = useState<number>()
 ```
 
 可以这样用
 
-```
+```typescript
 const [ data,setData] = useState<定义的类型>（）
 ```
 
@@ -179,6 +195,54 @@ function counterReducer(state: CountState, action: CountAction) ：CountState {
 ### Object【】调用对象方法，报错
 
 文档地址：https://blog.csdn.net/qq_45301392/article/details/118343769
+
+### Antd中typescript使用事项
+
+#### 1.Table表格
+
+##### TypeScript用法
+
+https://ant.design/components/table-cn/#API
+
+```typescript
+1.//定义dataSource每一项的类型结构
+interface DataItem{
+    id: string,
+    userName: string,
+    sex?: string,
+    key: number
+}
+2.//dataSource也要使用定义的结构
+const dataSource : DataItem[]=[ 
+    {id:"a",userName:"b"} 
+                              ]
+3.//columns 也要使用data结构，
+//相当于ColumnsType<T>
+const columns :ColumnsType<DataItem> =[
+    {
+      title: "id",
+      dataIndex: "id",
+      key: "id"
+    }
+]
+4.//<Table>组件内嵌类型-completed
+<Table<Data> dataSource={data} columns={columns} />
+
+```
+
+##### Rowkey | Item
+
+```typescript
+onChange: (selectedRowKeys: React.Key[], selectedRows: Data[])
+//selectedRowKeys类型为React.Key[],
+//selectedRows,选中行类型，item[],也就是每一行的类型，提前自己定义好的，对应datasource：data[]的data类型。
+```
+
+##### 行单击事件
+
+onRow事件的index是从0开始计算，第一行为0，key值为0
+
+如果dataSource里key值不是从0开始，会产生bug
 
 # 额外的
 
