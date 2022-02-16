@@ -196,11 +196,11 @@ function counterReducer(state: CountState, action: CountAction) ：CountState {
 
 文档地址：https://blog.csdn.net/qq_45301392/article/details/118343769
 
-### Antd中typescript使用事项
+# Antd中使用TS
 
-#### 1.Table表格
+## 1.Table表格
 
-##### TypeScript用法
+#### TypeScript用法
 
 https://ant.design/components/table-cn/#API
 
@@ -230,19 +230,65 @@ const columns :ColumnsType<DataItem> =[
 
 ```
 
-##### Rowkey | Item
+#### 行单击事件（bug）
 
-```typescript
-onChange: (selectedRowKeys: React.Key[], selectedRows: Data[])
-//selectedRowKeys类型为React.Key[],
-//selectedRows,选中行类型，item[],也就是每一行的类型，提前自己定义好的，对应datasource：data[]的data类型。
-```
-
-##### 行单击事件
-
-onRow事件的index是从0开始计算，第一行为0，key值为0
+1.问题：onRow事件的index是从0开始计算，第一行为0，key值为0
 
 如果dataSource里key值不是从0开始，会产生bug
+
+### 2.Radio和Checkbox（hooks）
+
+```typescript
+1.定义key和item的数据，Data[]|Data使用联合类型，可以是单独Data类型（用于Radio），可以Data[](用于Data[])
+const [selectedRowKeys, setselectedRowKeys] = useState<React.Key[] >()
+const [selectedRows, setselectedRows] = useState<Data[]|Data>()
+2.rowSelection
+const rowSelection = {
+    //selectedRows: Data[] |Data,这里与useState<Data[]|Data>，目的一样
+    onChange: (selectedRowKeys: React.Key[], selectedRows: Data[] |Data) => {
+      console.log("onChange事件触发");
+      //设置key和item
+      setselectedRowKeys(selectedRowKeys)
+      setselectedRows(selectedRows)
+      console.log(`单选框-selectedRowKeys: ${selectedRowKeys}`, '单选框-selectedRows: ', selectedRows);
+      console.log(selectedRowKeys);
+    },
+    selectedRowKeys
+  }
+3.onRow事件
+onRow={(record,index) => {
+            //onRow，的index从0开始计算
+              return {
+                onClick:e=>{
+                  //这里要使用断言
+                  let asIndex = [index as number]
+                  // setselectedRowKeys([a])
+                  // setselectedRows(record)
+                  // console.log("行单击",selectedRowKeys);
+                  rowSelection.onChange(asIndex,record)
+                  
+                }
+              }
+            }
+
+```
+
+![](E:\ts with project\ts-bicycle\onRow - 断言.png)
+
+onRow传过来的是number | undefined
+
+如果直接把index，传入到onChange事件的第一个参数，报错
+
+```
+不能将类型“undefined”分配给类型“Key”
+type React.Key = string | number
+//onChange
+onChange: (selectedRowKeys: React.Key[], 
+//第一个参数类型则为  React.key[]可能等同于（string|number）[]
+使用断言确定 index为 number类型
+```
+
+
 
 # 额外的
 

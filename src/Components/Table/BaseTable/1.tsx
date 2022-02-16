@@ -1,12 +1,11 @@
-import React, { Key, memo, useState } from 'react'
-import { Card, Table, Spin } from 'antd'
+import React, { memo, useState } from 'react'
+import { Card, Table, Spin, Button } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { LoadingOutlined } from '@ant-design/icons';
 import { useAxios } from '../../../utils/useAxios';
 interface TableProps {
 
 }
-type Params = Omit<React.Key,"string">
 type Data = {
   id: string,
   userName: string,
@@ -70,11 +69,12 @@ const BaseTable: React.FC<TableProps> = memo(() => {
   const [data2, setData] = useState()
   const [loading, setLoading] = useState<boolean>(false)
   //
-  const [selectedRowKeys, setselectedRowKeys] = useState<React.Key[] >()
-  const [selectedRows, setselectedRows] = useState<Data[]|Data>()
-//
-  const [selectedRowKeys_Check, setselectedRowKeys_Check] = useState<React.Key[]|React.Key >()
-  const [selectedRows_Check, setselectedRows_Check] = useState<Data[]|Data>()
+  const [selectedRowKeys, setselectedRowKeys] = useState<React.Key[]>()
+  const [selectedRows, setselectedRows] = useState<Data[] | Data>()
+  //
+  const [selectedRowKeys_CHECK, setselectedRowKeys_CHECK] = useState<React.Key[]>()
+  const [selectedRows_CHECK, setselectedRows_CHECK] = useState<Data[] | Data>()
+
   useAxios("./api/table/list.json", setData, "list", setLoading)
   const columns: ColumnsType<Data> = [
     {
@@ -128,32 +128,39 @@ const BaseTable: React.FC<TableProps> = memo(() => {
       key: 7
     }
   ]
+  //Radio的rowSelection
   const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: Data[] |Data) => {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: Data[] | Data) => {
       console.log("onChange事件触发");
-      
+
       setselectedRowKeys(selectedRowKeys)
       setselectedRows(selectedRows)
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      console.log(`单选框-selectedRowKeys: ${selectedRowKeys}`, '单选框-selectedRows: ', selectedRows);
       console.log(selectedRowKeys);
-      
+
     },
     selectedRowKeys
   }
-
+//CheckBox的rowSelection
   const rowSelection_Checkbox = {
-    onChange: (selectedRowKeys: React.Key[] |  React.Key , selectedRows: Data[] |Data) => {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: Data[] | Data) => {
       console.log("onChange事件触发-复选框");
-      
-      setselectedRowKeys_Check(selectedRowKeys)
-      setselectedRows_Check(selectedRows)
+
+      setselectedRowKeys_CHECK(selectedRowKeys)
+      setselectedRows_CHECK(selectedRows)
       console.log(`复选框-selectedRowKeys: ${selectedRowKeys}`, '复选框-selectedRows: ', selectedRows);
       console.log(selectedRowKeys);
-      
-    },
-    selectedRowKeys_Check
-  }
 
+    },
+    selectedRowKeys_CHECK
+  }
+  //Radio的删除事件
+  const handleDelete = () => {
+    console.log("获取Rows",selectedRows)
+    console.log("获取Keys",selectedRowKeys)
+
+  }
+  //CheckBox的删除事件
   return (
     <div>
       <Card title="基础表格">
@@ -165,6 +172,9 @@ const BaseTable: React.FC<TableProps> = memo(() => {
         </Spin>
       </Card>
       <Card title="单选动态表格">
+        <div>
+          <Button onClick={e => { handleDelete() }}>删除</Button>
+        </div>
         <Spin spinning={loading} indicator={antIcon}>
           <Table dataSource={data2}
             columns={columns}
@@ -172,17 +182,17 @@ const BaseTable: React.FC<TableProps> = memo(() => {
               type: "radio",
               ...rowSelection,
             }}
-            onRow={(record,index) => {
-            //onRow，的index从0开始计算
+            onRow={(record, index) => {
+              //onRow，的index从0开始计算
               return {
-                onClick:e=>{
+                onClick: e => {
                   let asIndex = [index as number]
-                 
+
                   // setselectedRowKeys([a])
                   // setselectedRows(record)
                   // console.log("行单击",selectedRowKeys);
-                  rowSelection.onChange(asIndex,record)
-                  
+                  rowSelection.onChange(asIndex, record)
+
                 }
               }
             }
@@ -198,17 +208,17 @@ const BaseTable: React.FC<TableProps> = memo(() => {
               type: "checkbox",
               ...rowSelection_Checkbox,
             }}
-            onRow={(record,index) => {
-            //onRow，的index从0开始计算
+            onRow={(record, index) => {
+              //onRow，的index从0开始计算
               return {
-                onClick:e=>{
-                  
-                 let asIndex = index as number
+                onClick: e => {
+                  let asIndex = [index as number]
+
                   // setselectedRowKeys([a])
                   // setselectedRows(record)
                   // console.log("行单击",selectedRowKeys);
-                  rowSelection_Checkbox.onChange(asIndex,record)
-                  
+                  rowSelection_Checkbox.onChange(asIndex, record)
+
                 }
               }
             }
