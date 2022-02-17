@@ -1,5 +1,5 @@
-import React, { Key, memo, useState } from 'react'
-import { Card, Table, Spin } from 'antd'
+import React, {memo, useState } from 'react'
+import { Card, Table, Spin, Button, Modal } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { LoadingOutlined } from '@ant-design/icons';
 import { useAxios } from '../../../utils/useAxios';
@@ -75,6 +75,8 @@ const BaseTable: React.FC<TableProps> = memo(() => {
 //
   const [selectedRowKeys_Check, setselectedRowKeys_Check] = useState<React.Key[]|React.Key >()
   const [selectedRows_Check, setselectedRows_Check] = useState<Data[]|Data>()
+  //
+  const [page, setPage] = useState<number>()
   useAxios("./api/table/list.json", setData, "list", setLoading)
   const columns: ColumnsType<Data> = [
     {
@@ -153,7 +155,29 @@ const BaseTable: React.FC<TableProps> = memo(() => {
     },
     selectedRowKeys_Check
   }
-
+  const handleDelete = ()=>{
+    Modal.info({
+      title:"删除信息",
+      content:`${selectedRowKeys},${selectedRows}`
+    })
+    console.log(`${selectedRowKeys}`,selectedRows);
+    
+  }
+  const pagination = (data:any,callback:Function) =>{
+    return{
+        // onChange:(page:number)=>{
+        //     callback(page)
+        // },
+        // current:data.data.result.page,
+        // pageSize:data.data.result.page_size,
+        // total:data.data.result.total,
+        // showTotal:()=>{
+        //     return`总条数${data.data.result.total}`
+        // },
+        // showQuickJumper:true
+    }
+   
+}
   return (
     <div>
       <Card title="基础表格">
@@ -166,6 +190,9 @@ const BaseTable: React.FC<TableProps> = memo(() => {
       </Card>
       <Card title="单选动态表格">
         <Spin spinning={loading} indicator={antIcon}>
+        <div>
+          <Button type='primary' onClick={e=>{handleDelete()}}>删除</Button>
+        </div>
           <Table dataSource={data2}
             columns={columns}
             rowSelection={{
@@ -187,6 +214,7 @@ const BaseTable: React.FC<TableProps> = memo(() => {
               }
             }
             }
+            pagination={pagination(page,(page:number)=>{setPage(page)})}
           />
         </Spin>
       </Card>

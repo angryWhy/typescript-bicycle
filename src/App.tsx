@@ -7,7 +7,7 @@ import 'antd/dist/antd.css';
 import "antd/dist/antd.less"
 
 import { AppWrapper } from "./app-style"
-import Alert from './Components/Table/BaseTable/index';
+import Alert from './Components/Table/HighTable/index';
 function App() {
   return (
     <AppWrapper className="App">

@@ -236,7 +236,7 @@ const columns :ColumnsType<DataItem> =[
 
 如果dataSource里key值不是从0开始，会产生bug
 
-### 2.Radio和Checkbox（hooks）
+#### Radio和Checkbox（hooks）
 
 ```typescript
 1.定义key和item的数据，Data[]|Data使用联合类型，可以是单独Data类型（用于Radio），可以Data[](用于Data[])
@@ -286,6 +286,23 @@ type React.Key = string | number
 onChange: (selectedRowKeys: React.Key[], 
 //第一个参数类型则为  React.key[]可能等同于（string|number）[]
 使用断言确定 index为 number类型
+```
+
+#### Columns，render方法返回组件
+
+```javascript
+{
+      title:"删除",
+      render(text,item){
+        return(<Button onClick={(e)=>{handleDelete(text,item)}} type="link">删除</Button>)
+}
+//以下行不通
+{
+      title:"删除",
+      render(text,item){
+        return(<a onClick={(text,item)=>{handleDelete(text,item)}} >删除</a>)
+//类型不兼容，参数类型问题
+}
 ```
 
 
