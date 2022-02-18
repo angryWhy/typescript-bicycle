@@ -1,10 +1,13 @@
-import { Row, Form, Select, Col, Button, Space, Card, Table, Spin } from 'antd';
+import { Row, Form, Select, Col, Button, Card, Table, Spin,Modal, FormInstance, Input } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import React, { memo, useState } from 'react'
+import React, { memo, useState,forwardRef,useRef} from 'react'
 import { useAxios } from '../../utils/useAxios';
 import { ColumnsType } from 'antd/es/table';
 interface CityProps {
 
+}
+interface SubPros {
+    setSubData:Function
 }
 interface City {
     id: number
@@ -16,11 +19,25 @@ interface City {
     open_time: string
     manager_id: string
 }
+//Collection的type
+interface CollectionCreateFormProps {
+    visible: boolean;
+    onCreate: (values: Values) => void;
+    onCancel: () => void;
+  }
+interface Values {
+    title: string;
+    description: string;
+    modifier: string;
+  }
 const { Option } = Select
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 const CityCpn: React.FC<CityProps> = memo(() => {
     const [data, setData] = useState<City[]>()
     const [loading, setLoading] = useState<boolean>(false)
+    const [subShow, setSubShow] = useState<boolean>(false)
+    const subRef = useRef<FormInstance>()
+    const [subData,setSubData] = useState()
     useAxios("./api/city/list.json", setData, "Citylist", setLoading)
     const columns: ColumnsType<City> = [
         {
@@ -56,6 +73,11 @@ const CityCpn: React.FC<CityProps> = memo(() => {
             dataIndex: "manager_id"
         }
     ]
+    //Form表单取值
+    const onCreate = (values: any) => {
+        console.log('Received values of form: ', values);
+        setSubShow(false);
+      }
     return (
         <div><Card>
             <Form layout="inline">
@@ -96,12 +118,65 @@ const CityCpn: React.FC<CityProps> = memo(() => {
         </Card>
             <Card>
                 <Spin spinning={loading} indicator={antIcon}>
-                    <Button>开通城市</Button>
+                    <Button type='primary' onClick={e=>{setSubShow(true)}}>开通城市</Button>
                     <Table<City> columns={columns} dataSource={data} />
                 </Spin>
-            </Card>
+        </Card>
+        <CollectionCreateForm visible={subShow} onCreate={onCreate} onCancel={()=>{setSubShow(false)}}/>
         </div>
     )
 })
-
+const CollectionCreateForm :React.FC<CollectionCreateFormProps>  =({
+    visible,
+    onCreate,
+    onCancel,
+  })=>{
+    const [form] = Form.useForm();
+    return(
+        <Modal 
+        visible={visible}
+        okText="提交"
+        cancelText="取消"
+        onOk={() => {
+            form
+              .validateFields()
+              .then(values => {
+                form.resetFields();
+                onCreate(values);
+                if(values){
+                    Modal.success({
+                        title:"开通成功",
+                        content: ""
+                    })
+                }
+              })
+              //获取值失败
+              .catch(info => {
+                console.log('Validate Failed:', info);
+              });
+          }}
+        >
+            <Form form={form}>
+                <Form.Item label="选择城市" name="城市">
+                <Select>
+                    <Option value={1}>天津</Option>
+                    <Option value={2}>河北</Option>
+                </Select>
+                </Form.Item>
+                <Form.Item label="运营模式" name="mode">
+                <Select >
+                    <Option value={1}>运营模式</Option>
+                    <Option value={2}>用车模式</Option>
+                </Select>
+                </Form.Item>
+                <Form.Item label="用车模式" name="bicycle">
+                <Select >
+                    <Option value={1}>停车点</Option>
+                    <Option value={2}>禁停区</Option>
+                </Select>
+                </Form.Item>
+            </Form>
+        </Modal>
+    )
+}
 export default CityCpn

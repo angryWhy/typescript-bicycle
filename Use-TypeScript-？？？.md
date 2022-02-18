@@ -307,6 +307,33 @@ onChange: (selectedRowKeys: React.Key[],
 
 
 
+## 2.Modal内嵌Form
+
+1.使用forwardRef，拿到FormInstance实例
+
+2.https://ant.design/components/form-cn/#components-form-demo-form-in-modal
+
+文档已给出方法
+
+```javascript
+文档例子：分析
+CollectionsPage//父组件，
+
+const [visible, setVisible] = useState(false)//控制Modal显示
+
+const onCreate = (values: any) => {
+    console.log('Received values of form: ', values);
+    setVisible(false);
+  }
+//Modal内嵌Form，确认触发事件
+
+CollectionCreateForm//子组件，Modal+Form
+
+
+```
+
+
+
 # 额外的
 
 ### Styled-components，没有提示
