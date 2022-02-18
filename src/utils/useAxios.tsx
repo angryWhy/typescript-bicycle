@@ -24,14 +24,26 @@ export function useAxios(url: string, callBack: Function, params: string, setLoa
                         //city组件
                         if (params === "Citylist") {
                             console.log(res.data.result);
-                            
+
                             callBack(res.data.result)
                             if (setLoading)
                                 setLoading(false)
                         }
-                    }, 2000);
+                        if (params === "order") {
+                            console.log(res.data.result.item_list);
+                            const newList = res.data.result.item_list as any[]
+                            newList.map((item,index)=>{
+                                 item.key=index
+                                 return item
+                            })
+                            callBack(newList)
+                            if (setLoading)
+                                setLoading(false)
+
+                        }
+                    }, 1000);
                 }
             )
         }
-        , [url, callBack, params,setLoading])
+        , [url, callBack, params, setLoading])
 }
