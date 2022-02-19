@@ -63,6 +63,19 @@ const todo: TodoPreview = {
 };
 ```
 
+### 类型断言
+
+#### 1.！断言
+
+！为类型运算符，非空类型断言，从某个类型中剔除undefined类型和null类型，
+
+```
+例如 exp推导类型 number|undefined ，
+exp! , 的类型改变为number
+```
+
+
+
 ### 一些技巧
 
 #### 关于对象方面
@@ -329,6 +342,30 @@ const onCreate = (values: any) => {
 
 CollectionCreateForm//子组件，Modal+Form
 
+
+```
+
+## 3.AntdForm中使用ref
+
+例子：https://ant.design/components/form-cn/#components-form-demo-control-ref
+
+FormInstance实例：https://ant.design/components/form-cn/#FormInstance
+
+```javascript
+typescript中使用
+//引入FormInstance类型
+import { FormInstance } from 'antd/es/form';
+
+//类组件
+formRef = React.createRef<FormInstance>();
+//hook
+const ref = useRef<FormInstance>(null)//null值要设置
+
+//挂载
+<Form layout='inline' ref={formRef}>
+    
+//操作，！！！注意类型断言，把null类型剔除
+formRef.current!.getFieldsValue()
 
 ```
 

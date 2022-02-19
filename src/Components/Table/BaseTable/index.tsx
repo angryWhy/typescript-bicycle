@@ -231,7 +231,7 @@ const BaseTable: React.FC<TableProps> = memo(() => {
               return {
                 onClick:e=>{
                   
-                 let asIndex = index as number
+                 let asIndex = index!
                   // setselectedRowKeys([a])
                   // setselectedRows(record)
                   // console.log("行单击",selectedRowKeys);
