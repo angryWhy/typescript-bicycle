@@ -1,4 +1,4 @@
-import { Button, Card, DatePicker, Form, Modal, Select, Spin, Table } from 'antd'
+import { Button, Card, DatePicker, Form, message, Modal, Select, Spin, Table } from 'antd'
 import React, { memo, useState } from 'react'
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
@@ -26,10 +26,16 @@ interface Values {
     title: string;
     description: string;
     modifier: string;
-  }
+}
 interface SubFormProps {
-    visible:boolean,
+    visible: boolean,
     onCreate: (values: Values) => void;
+    onCancel: () => void;
+}
+interface SubFormProps2 {
+    visible: boolean,
+    selectedRows:  Data | Data[],
+    onCreate: (values: Values,item:Data) => void;
     onCancel: () => void;
 }
 
@@ -40,8 +46,9 @@ const Order: React.FC<OrderProps> = memo(() => {
     const [data, setData] = useState<Data[]>()
     const [loading, setLoading] = useState(true)
     const [selectedRowKeys, setselectedRowKeys] = useState<React.Key[]>()
-    const [selectedRows, setselectedRows] = useState<Data[] | Data>()
+    const [selectedRows, setselectedRows] = useState<Data[] | Data>([])
     const [subShow, setSubShow] = useState<boolean>(false)
+    const [subShow_End, setSubShow_End] = useState<boolean>(false)
     useAxios("./api/order/list.json", setData, "order", setLoading)
 
     const columns: ColumnsType<Data> = [
@@ -121,8 +128,25 @@ const Order: React.FC<OrderProps> = memo(() => {
     const onCreate = (values: any) => {
         console.log('Received values of form: ', values);
         setSubShow(false);
-      }
-    
+    }
+    const onCreate2 = (values: any,item:Data) => {
+        console.log('结束 ')
+        console.log(item);
+        setSubShow_End(false)
+    }
+    const handleEnd = (selectedRows: Data | Data[]) =>{
+        let item = selectedRows as Data
+        if(item.order_id){
+            setSubShow_End(true)
+        }
+        else{
+            message.info({
+                title:"提示",
+                content: "选择一条信息"
+            })
+        }
+    }
+
     return (
         <div>
             <Card>
@@ -153,57 +177,101 @@ const Order: React.FC<OrderProps> = memo(() => {
             </Card>
             <Card>
                 <Spin spinning={loading} indicator={antIcon}>
-                    <Button onClick={e=>{setSubShow(true)}} type="primary" style={{marginLeft:"20px"}}>订单详情</Button>
-                    <Button onClick={e=>{}} type="primary" style={{marginLeft:"20px"}}>结束订单</Button>
+                    <Button onClick={e => { setSubShow(true) }} type="primary" style={{ margin: "20px" }}>订单详情</Button>
+                    <Button onClick={e => { handleEnd(selectedRows) }} type="primary" style={{ margin: "20px" }}>结束订单</Button>
                     <Table<Data> columns={columns}
                         rowSelection={{
                             type: "radio",
                             ...rowSelection,
                         }}
-                        onRow={(record,index) => {
-                              return {
-                                onClick:e=>{
-                                  let asIndex = [index as number]
-                                  rowSelection.onChange(asIndex,record)
+                        onRow={(record, index) => {
+                            return {
+                                onClick: e => {
+                                    let asIndex = [index as number]
+                                    rowSelection.onChange(asIndex, record)
                                 }
-                              }
                             }
+                        }
                         }
                         dataSource={data} />
                 </Spin>
             </Card>
-            <SubForm visible={subShow} onCreate={onCreate} onCancel={()=>{setSubShow(false)}}/>
+            <SubForm visible={subShow} onCreate={onCreate} onCancel={() => { setSubShow(false) }} />
+            <SubFormEnd visible={subShow_End} onCreate={onCreate2} onCancel={() => { setSubShow_End(false) }} selectedRows={selectedRows} />
         </div>
     )
 })
-const SubForm :React.FC<SubFormProps> = ({visible,onCreate,onCancel})=>{
+const SubForm: React.FC<SubFormProps> = ({ visible, onCreate, onCancel }) => {
     const [form] = Form.useForm();
-    return(
-        <Modal 
-        visible={visible}
-        okText="提交"
-        cancelText="取消"
-        onOk={() => {
-            form
-              .validateFields()
-              .then(values => {
-                form.resetFields();
-                onCreate(values);
-                if(values){
-                    Modal.success({
-                        title:"开通成功",
-                        content: ""
+    return (
+        <Modal
+            visible={visible}
+            okText="提交"
+            cancelText="取消"
+            onOk={() => {
+                form
+                    .validateFields()
+                    .then(values => {
+                        form.resetFields();
+                        onCreate(values);
+
                     })
-                }
-              })
-              //获取值失败
-              .catch(info => {
-                console.log('Validate Failed:', info);
-              });
-          }}
+                    //获取值失败
+                    .catch(info => {
+                        console.log('Validate Failed:', info);
+                    });
+            }}
         >
             <Form form={form}></Form>
-            </Modal>
+        </Modal>
+    )
+}
+const SubFormEnd: React.FC<SubFormProps2> = ({ visible, onCreate, onCancel, selectedRows}) => {
+    let item = selectedRows as Data
+    const [form] = Form.useForm();
+    return (
+        <Modal
+            title="结束订单"
+            visible={visible}
+            okText="结束"
+            cancelText="取消"
+            onOk={() => {
+                form
+                    .validateFields()
+                    .then(values => {
+                        form.resetFields();
+                        onCreate(values,item);
+
+                    })
+                    //获取值失败
+                    .catch(info => {
+                        console.log('Validate Failed:', info);
+                    });
+            }}
+        >
+            <Form form={form}>
+                <Form.Item label="单车编号">
+                    {
+                        item.order_id
+                    }
+                </Form.Item>
+                <Form.Item label="行驶时间">
+                    {
+                        item.time
+                    }
+                </Form.Item>
+                <Form.Item label="开始时间">
+                    {
+                       item.start_time
+                    }
+                </Form.Item>
+                <Form.Item label="结束时间">
+                    {
+                        item.end_time
+                    }
+                </Form.Item>
+            </Form>
+        </Modal>
     )
 }
 export default Order
