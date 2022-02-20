@@ -1,6 +1,6 @@
 import React, { memo, useRef } from 'react'
 
-import { Select, Form, DatePicker, Button } from 'antd'
+import { Select, Form, DatePicker, Button, Card } from 'antd';
 
 import { ItemType } from '..'
 import { AntdType, OptionType } from '../index';
@@ -53,7 +53,7 @@ const HeadCpn: React.FC<HeadProps> = memo(({ FormList }) => {
         return OptionList
     }
     return (
-        <div>
+        <Card>
             <Form layout='inline' ref={formRef}>
                 {
                     renderForm(FormList)
@@ -68,7 +68,7 @@ const HeadCpn: React.FC<HeadProps> = memo(({ FormList }) => {
                     }}>重置</Button>
                 </Form.Item>
             </Form>
-        </div>
+        </Card>
     )
 })
 
