@@ -1,5 +1,5 @@
 import { ColumnsType } from 'antd/es/table/Table'
-import React, { memo, ReactText, useState } from 'react'
+import React, { memo,  useState } from 'react'
 import { useAxios } from '../../utils/useAxios'
 import ContentCpn from './Content-Cpn'
 import HeadCpn from './Head-Cpn'
@@ -8,7 +8,9 @@ export enum AntdType {
   SELECT = "SELECT",
   CHECKBOX = "CHECKBOX",
   DATEPICK = "DATEPICK",
-  BUTTON = "BUTTON"
+  BUTTON = "BUTTON",
+  RADIO = "RADIO",
+  TEXTAREA = "TEXTAREA"
 }
 interface BaseTableProps {
 
@@ -20,11 +22,12 @@ export type OptionType = {
 export interface ItemType {
   type: string,
   label?: string,
+  //传入到封装组件，当做key值
   name?: string,
   placeholder?: string,
   width?: string,
   option?: OptionType[],
-  buttonText?: string
+  buttonText?: string,
 }
 export interface Data {
   order_id: string,
@@ -225,6 +228,7 @@ const BaseTable: React.FC<BaseTableProps> = memo(() => {
     }
   ]
   return (
+    // 子组件定义了可选getData,获取子组件状态
     <div>
       <HeadCpn FormList={FormList} />
       <ContentCpn columns={columns} 

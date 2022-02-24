@@ -1,6 +1,6 @@
 import React, { memo, useRef } from 'react'
 
-import { Select, Form, DatePicker, Button, Card } from 'antd';
+import { Select, Form, DatePicker, Button, Card, Input, Radio } from 'antd';
 
 import { ItemType } from '..'
 import { AntdType, OptionType } from '../index';
@@ -10,10 +10,14 @@ import locale from 'antd/lib/date-picker/locale/zh_CN';
 import { FormInstance } from 'antd/es/form/Form';
 
 interface HeadProps {
-    FormList: ItemType[]
+    FormList: ItemType[],
+    //getData是使用这个组件定义的ref先获取到值，然后通过子传父传递到父组件，在取到值
+    getData?:()=>void,
+    form?:any
 }
 const { Option } = Select
-const HeadCpn: React.FC<HeadProps> = memo(({ FormList }) => {
+const {TextArea} = Input
+const HeadCpn: React.FC<HeadProps> = memo(({ FormList,form }) => {
     const formRef = useRef<FormInstance>(null)
     const renderForm = (FormList: ItemType[]) => {
         const List = FormList.map((item: ItemType, index: number) => {
@@ -32,6 +36,30 @@ const HeadCpn: React.FC<HeadProps> = memo(({ FormList }) => {
                 return (
                     <Form.Item label={item.label} name={item.name} key={item.name}>
                         <DatePicker locale={locale} />
+                    </Form.Item>
+                )
+            }
+            if (item.type === AntdType.INPUT) {
+                return (
+                    <Form.Item label={item.label} name={item.name} key={item.name}>
+                        <Input  placeholder={item.placeholder}/>
+                    </Form.Item>
+                )
+            }
+            if(item.type ===AntdType.RADIO){
+                return(
+                    <Form.Item label={item.label} name={item.name} key={item.name}>
+                        <Radio.Group>
+                            <Radio value="1">男</Radio>
+                            <Radio value="2">女</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                )
+            }
+            if(item.type ===AntdType.TEXTAREA){
+                return(
+                    <Form.Item label={item.label} name={item.name} key={item.name}>
+                        <TextArea />
                     </Form.Item>
                 )
             }
@@ -54,7 +82,7 @@ const HeadCpn: React.FC<HeadProps> = memo(({ FormList }) => {
     }
     return (
         <Card>
-            <Form layout='inline' ref={formRef}>
+            <Form layout='inline' ref={formRef} form={form ? form:null}>
                 {
                     renderForm(FormList)
                 }

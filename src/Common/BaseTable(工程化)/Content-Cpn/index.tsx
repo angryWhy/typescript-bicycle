@@ -1,6 +1,5 @@
 import { LoadingOutlined } from '@ant-design/icons'
 import { Card, Spin, Table } from 'antd'
-import { TableRowSelection } from 'antd/es/table/interface'
 import { ColumnsType } from 'antd/lib/table/Table'
 import React, { memo, useState } from 'react'
 import { Data } from '..'
@@ -8,8 +7,8 @@ interface ContentProps {
   columns: ColumnsType<Data>
   dataSource: Data[],
   type: "checkbox" | "radio",
-  loading:boolean
-
+  loading:boolean,
+  getData?:()=>void
 }
 
 
