@@ -15,47 +15,50 @@ interface CollectionCreateFormProps {
 }
 const CreateUser: React.FC<CollectionCreateFormProps> = memo(({ visible, onCreate, onCancel }) => {
     const [form] = Form.useForm();
-    const formList :ItemType[] = [
+    const formList: ItemType[] = [
         {
-            type:AntdType.INPUT,
-            label:"姓名",
-            placeholder:"请输入姓名",
-            name:"user_name"
+            type: AntdType.INPUT,
+            label: "姓名",
+            placeholder: "请输入姓名",
+            name: "user_name"
         },
         {
-            type:AntdType.RADIO,
-            label:"性别",
-            name:"user_sex"
+            type: AntdType.RADIO,
+            label: "性别",
+            name: "user_sex"
         },
         {
-            type:AntdType.SELECT,
-            label:"状态",
-            option:[
+            type: AntdType.SELECT,
+            label: "状态",
+            option: [
                 {
-                    value:"1",
-                    text:"男"
+                    value: "1",
+                    text: "男"
                 },
                 {
-                    value:"2",
-                    text:"女"
+                    value: "2",
+                    text: "女"
                 }
             ],
-            name:"user_status"
+            name: "user_status"
         },
         {
-            type:AntdType.DATEPICK,
-            label:"生日",
-            name:"birthday"
+            type: AntdType.DATEPICK,
+            label: "生日",
+            name: "birthday"
         },
         {
-            type:AntdType.TEXTAREA,
-            label:"详细地址",
-            name:"user_address"
+            type: AntdType.TEXTAREA,
+            label: "详细地址",
+            name: "user_address"
         }
     ]
     return (
         <div>
-            <Modal title="创建员工" visible={visible} onCancel={onCancel}
+            <Modal title="创建员工"
+                   visible={visible}
+                   width={400}
+                   onCancel={onCancel}
                 onOk={() => {
                     form
                         .validateFields()
@@ -68,9 +71,9 @@ const CreateUser: React.FC<CollectionCreateFormProps> = memo(({ visible, onCreat
                         });
                 }}
             >
-                
-                    <HeadCpn FormList={formList} form={form} />
-                
+
+                <HeadCpn FormList={formList} form={form} />
+
             </Modal>
         </div>
     )

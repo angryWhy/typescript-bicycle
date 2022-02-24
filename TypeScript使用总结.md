@@ -65,13 +65,48 @@ const todo: TodoPreview = {
 
 ### 类型断言
 
-#### 1.！断言
+#### 断言
 
 ！为类型运算符，非空类型断言，从某个类型中剔除undefined类型和null类型，
 
 ```
 例如 exp推导类型 number|undefined ，
 exp! , 的类型改变为number
+```
+
+as为类型断言
+
+```
+type par = string | number
+type P = par as number
+```
+
+?,问号使用场景
+
+```typescript
+1.可选属性
+const obj = {
+name?:string
+}
+
+2.可选参数，必须在最后
+const fn = (payload?:string) => {}
+
+3.三元运算符
+let a = (1>2) ? true : false 
+
+4.安全链式调用
+// 这里 Error对象定义的stack是可选参数，如果这样写的话编译器会提示
+// 出错 TS2532: Object is possibly 'undefined'.
+return new Error().stack.split('\n');
+
+// 我们可以添加?操作符，当stack属性存在时，调用 stack.split。
+// 若stack不存在，则返回空
+return new Error().stack?.split('\n');
+
+// 以上代码等同以下代码
+const err = new Error();
+return err.stack && err.stack.split('\n');
 ```
 
 
@@ -89,7 +124,26 @@ type Obj = {
 }
 ```
 
+#### Object["方法名"]调用对象方法，报错
 
+```typescript
+const obj = {
+ say(){
+ console.log()
+ }
+ eat(){
+ console.log()
+ }
+}
+// T为传入对象，K为对象的方法名string
+//声明T对象，然后通过keyof 取得T的方法名，泛型K继承限制
+function props<T extends object,K extends keyof T> (obj:T,key:K){
+    return obj[key]
+}
+props(obj,"say")
+```
+
+文档地址：https://blog.csdn.net/qq_45301392/article/details/118343769
 
 # 项目中
 
@@ -205,9 +259,7 @@ function counterReducer(state: CountState, action: CountAction) ：CountState {
 
 用法：https://juejin.cn/post/6844903846607585293
 
-### Object【】调用对象方法，报错
 
-文档地址：https://blog.csdn.net/qq_45301392/article/details/118343769
 
 # Antd中使用TS
 

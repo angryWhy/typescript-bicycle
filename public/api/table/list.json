@@ -4,7 +4,7 @@
   "result": {
     "list": [{
       "id": 1,
-      "userName": "@cname",
+      "userName": "A",
       "sex": 1,
       "state": 1,
       "interest": 1,
@@ -16,7 +16,7 @@
     },
     {
       "id": 2,
-      "userName": "@cname",
+      "userName": "B",
       "sex": 1,
       "state": 1,
       "interest": 1,
@@ -28,7 +28,7 @@
     },
     {
       "id": 3,
-      "userName": "@cname",
+      "userName": "C",
       "sex": 1,
       "state": 1,
       "interest": 1,
@@ -40,7 +40,7 @@
     },
     {
       "id":4,
-      "userName": "@cname",
+      "userName": "D",
       "sex": 1,
       "state": 1,
       "interest": 1,
@@ -52,7 +52,7 @@
     },
     {
       "id": 5,
-      "userName": "@cname",
+      "userName": "E",
       "sex": 1,
       "state": 1,
       "interest": 1,
@@ -64,7 +64,7 @@
     },
     {
       "id": 6,
-      "userName": "@cname",
+      "userName": "F",
       "sex": 1,
       "state": 1,
       "interest": 1,
@@ -76,7 +76,7 @@
     },
     {
       "id": 7,
-      "userName": "@cname",
+      "userName": "G",
       "sex": 1,
       "state": 1,
       "interest": 1,
