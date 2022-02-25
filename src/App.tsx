@@ -7,7 +7,7 @@ import 'antd/dist/antd.css';
 import "antd/dist/antd.less"
 
 import { AppWrapper } from "./app-style"
-import Alert from "./Components/user-manger/index";
+import Alert from "./Components/Echarts/Line/index";
 function App() {
   return (
     <AppWrapper className="App">

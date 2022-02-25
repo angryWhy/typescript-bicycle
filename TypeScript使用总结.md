@@ -423,6 +423,22 @@ formRef.current!.getFieldsValue()
 
 
 
+# 第三方库引用
+
+## 需要声明文件
+
+```typescript
+1.在src目录下，创建types，common.d.ts
+2.声明 
+  以window百度地图为例
+  declare interface Window {
+    BMapGL: any
+}
+  
+```
+
+
+
 # 额外的
 
 ### Styled-components，没有提示

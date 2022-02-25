@@ -3,7 +3,7 @@ import React, { memo, useState } from 'react'
 import HeadCpn from '../../Common/BaseTable(工程化)/Head-Cpn';
 
 import { ItemType, AntdType } from '../../Common/BaseTable(工程化)/index';
-import { Button, Card, Spin, Table } from 'antd';
+import { Button, Card, Spin, Table, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import CreateUser from './CreateUser';
 import { useAxios } from '../../utils/useAxios';
@@ -40,6 +40,22 @@ const User: React.FC<UserProps> = memo(() => {
         console.log('Received values of form: ', values);
         setVisible_compiler(false);
     };
+    const handleOpenCompiler = () =>{
+        if(selectedRows)
+        setVisible_compiler(true)
+        if(!selectedRows)
+        message.info({
+            title:"提示",
+            content:"请选择一条信息"
+        })
+    }
+    const handleDelete = () =>{
+        if(!selectedRows)
+        message.info({
+            title:"提示",
+            content:"请选择一条信息"
+        })
+    }
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: Data[] | Data) => {
             console.log("onChange事件触发");
@@ -112,10 +128,11 @@ const User: React.FC<UserProps> = memo(() => {
             </Card>
             <Card>
                 <Button type='primary' onClick={e => { setVisible(true) }} style={{ marginLeft: "20px" }}>创建员工</Button>
-                <Button type='primary' onClick={e => { setVisible_compiler(true) }} style={{ marginLeft: "20px" }}>编辑员工</Button>
+                <Button type='primary' onClick={e => {handleOpenCompiler() }} style={{ marginLeft: "20px" }}>编辑员工</Button>
                 <Button type='primary' onClick={e => { }} style={{ marginLeft: "20px" }}>员工详情</Button>
-                <Button type='primary' onClick={e => { }} style={{ marginLeft: "20px" }}>删除员工</Button>
+                <Button type='primary' onClick={e => {handleDelete() }} style={{ marginLeft: "20px" }}>删除员工</Button>
                 <CreateUser onCreate={onCreate} onCancel={() => { setVisible(false) }} visible={visible} />
+                
                 <CompileUser onCreate={onCreate_com} onCancel={() => { setVisible_compiler(false) }} visible={visible_compiler} selectedRows={selectedRows!}/>
             </Card>
             <Card>

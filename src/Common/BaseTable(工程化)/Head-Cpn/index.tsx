@@ -12,12 +12,12 @@ import { FormInstance } from 'antd/es/form/Form';
 interface HeadProps {
     FormList: ItemType[],
     //getData是使用这个组件定义的ref先获取到值，然后通过子传父传递到父组件，在取到值
-    getData?:()=>void,
+    getData?:Function,
     form?:any
 }
 const { Option } = Select
 const {TextArea} = Input
-const HeadCpn: React.FC<HeadProps> = memo(({ FormList,form }) => {
+const HeadCpn: React.FC<HeadProps> = memo(({ FormList,form,getData }) => {
     const formRef = useRef<FormInstance>(null)
     const renderForm = (FormList: ItemType[]) => {
         const List = FormList.map((item: ItemType, index: number) => {
@@ -89,7 +89,8 @@ const HeadCpn: React.FC<HeadProps> = memo(({ FormList,form }) => {
                 <Form.Item>
                     <Button type='primary' style={{ marginLeft: "20px" }} onClick={e => {
                         formRef.current!.getFieldsValue();
-                        console.log(formRef.current!.getFieldsValue());
+                        console.log("HeadCpn.tsx,92行的LOG",formRef.current!.getFieldsValue());
+                        getData!(formRef.current!.getFieldsValue())
                     }}>查询</Button>
                     <Button type='primary' style={{ marginLeft:  "20px" }} onClick={e => {
                         formRef.current!.resetFields()

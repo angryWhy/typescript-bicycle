@@ -8,7 +8,11 @@ export function useAxios(url: string, callBack: Function, params: string, setLoa
                 res => {
                     if (setLoading)
                         setLoading(true)
-
+                    if(params==="mapData"){
+                        callBack(res.data.result)
+                        console.log(res.data.result);
+                        
+                    }
 
                     setTimeout(() => {
                         //head用户名

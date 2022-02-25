@@ -1,4 +1,4 @@
-import { Checkbox, DatePicker, Form, Input, Modal, Radio, Select } from 'antd'
+import { Checkbox, DatePicker, Form, Input, Modal, Radio, Select, message } from 'antd';
 import React, { memo, useRef } from 'react'
 import { Data } from '.';
 import { FormInstance } from 'antd/es/form/Form';
@@ -35,6 +35,7 @@ const CompileUser: React.FC<CompilerProps> = memo(({ visible, onCancel, onCreate
         // formRef.current?.setFieldsValue({
         //     user_name:"1111"
         // })
+        
     }
 
     return (

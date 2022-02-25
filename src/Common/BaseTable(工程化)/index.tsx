@@ -15,10 +15,12 @@ export enum AntdType {
 interface BaseTableProps {
 
 }
+//定义Select的Option类型
 export type OptionType = {
   value: number | string,
   text: string
 }
+//FormList的每一项的类型
 export interface ItemType {
   type: string,
   label?: string,
@@ -29,6 +31,7 @@ export interface ItemType {
   option?: OptionType[],
   buttonText?: string,
 }
+//请求数据list的每一项的类型
 export interface Data {
   order_id: string,
   bike_id: string,
