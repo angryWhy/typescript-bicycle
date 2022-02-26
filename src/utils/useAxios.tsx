@@ -13,6 +13,11 @@ export function useAxios(url: string, callBack: Function, params: string, setLoa
                         console.log(res.data.result);
                         
                     }
+                    if(params==="prem"){
+                        console.log(res.data.result);
+                        callBack(res.data.result.item_list)
+                        
+                    }
 
                     setTimeout(() => {
                         //head用户名

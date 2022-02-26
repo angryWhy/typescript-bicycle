@@ -38,6 +38,48 @@ const todo2 = updateTodo(todo1,
 
 ```
 
+#### Required< Type >
+
+```
+反面Partial
+所有的属性必须有
+```
+
+#### Readonly< Type>
+
+```typescript
+interface Todo {
+  title: string;
+}
+ //属性不能重新分配
+const todo: Readonly<Todo> = {
+  title: "Delete inactive users",
+};
+ 
+todo.title = "Hello";//ERROR
+```
+
+#### Record<Keys, Type>
+
+```typescript
+interface CatInfo {
+  age: number;
+  breed: string;
+}
+ 
+type CatName = "miffy" | "boris" | "mordred";
+ 
+const cats: Record<CatName, CatInfo> = {
+  //CatName:键的类型（例子为联合）
+  //CatInfo：值的类型
+  miffy: { age: 10, breed: "Persian" },
+  boris: { age: 5, breed: "Maine Coon" },
+  mordred: { age: 16, breed: "British Shorthair" },
+};
+```
+
+
+
 #### Omit<Type, Keys>
 
 `Type`通过从中选择所有属性然后删除`Keys`（字符串文字或字符串文字的联合）来构造类型。
@@ -62,6 +104,77 @@ const todo: TodoPreview = {
   createdAt: 1615544252770,
 };
 ```
+
+#### Pick<Type, Keys>
+
+```typescript
+从Type里挑选 key，组成新的类型
+interface Todo {
+  title: string;
+  description: string;
+  completed: boolean;
+}
+ 
+type TodoPreview = Pick<Todo, "title" | "completed">
+```
+
+#### Exclude<UnionType, ExcludedMembers>
+
+```typescript
+从Union里去除Member类型
+
+type T0 = Exclude<"a" | "b" | "c", "a">;
+type T0 = "b" | "c"
+
+type T2 = Exclude<string | number | (() => void), Function>;
+type T2 = string | number
+```
+
+#### Extract<Type, Union>（交集）
+
+```
+type T1 = Extract<string | number | (() => void), Function>;
+type T1 = () => void
+```
+
+
+
+#### keyof，typeof
+
+```typescript
+keyof
+type Arrayish = { [n: number]: unknown };
+type A = keyof Arrayish;
+A类型为number
+
+type Mapish = { [k: string]: boolean };
+type M = keyof Mapish;
+M类型为number或者string
+
+这是因为 JavaScript 对象键始终强制转换为字符串 obj[0]，obj["0"]
+
+在对象或者枚举中使用keyof typeof
+const bmw = { name: "BMW", power: "1000hp" }
+type CarLiteralType = keyof typeof bmw
+let carPropertyLiteral: CarLiteralType
+carPropertyLiteral = "name"       
+carPropertyLiteral = "power"      
+carPropertyLiteral = "anyOther"//ERROR
+//枚举
+//运行时作为对象存在
+enum ColorsEnum {
+    white = '#ffffff',
+    black = '#000000',
+}
+type b = keyof typeof ColorsEnum
+
+
+typeof
+const obj = {a:1,0:"2"}
+typeof obj，显示 值 的类型
+```
+
+
 
 ### 类型断言
 

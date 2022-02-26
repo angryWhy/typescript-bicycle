@@ -5,14 +5,46 @@
     "page_size": 10,
     "total_count": 25,
     "page_count": 3,
-    "item_list|7": [{
-      "id|+1": 1,
-      "role_name": "管理人员",
-      "status|0-1": 1,
-      "authorize_user_name": "@cname",
-      "authorize_time": 1521270166000,
-      "create_time": 1499305790000,
+    "item_list": [{
+      "id": 1,
+      "role": "管理人员",
+      "status": 1,
+      "user_name": "@cname",
+      "allow_time": 1521270166000,
+      "make_time": 1499305790000,
+      "key":0,
       "menus": ["/home", "/ui/buttons", "/ui/modals", "/ui/loadings", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
-    }]
+    },
+    {
+      "id": 2,
+      "role": "营销人员",
+      "status": 2,
+      "user_name": "@cname",
+      "allow_time": 1521270166000,
+      "make_time": 1499305790000,
+      "key":1,
+      "menus": ["/home", "/ui/buttons", "/ui/modals", "/ui/loadings", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
+    },
+    {
+      "id": 3,
+      "role": "营销人员",
+      "status": 3,
+      "user_name": "@cname",
+      "allow_time": 1521270166000,
+      "make_time": 1499305790000,
+      "key":2,
+      "menus": ["/home", "/ui/buttons", "/ui/modals", "/ui/loadings", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
+    },
+    {
+      "id": 4,
+      "role": "管理人员",
+      "status": 1,
+      "user_name": "@cname",
+      "allow_time": 1521270166000,
+      "make_time": 1499305790000,
+      "key":3,
+      "menus": ["/home", "/ui/buttons", "/ui/modals", "/ui/loadings", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
+    }
+  ]
   }
 }
