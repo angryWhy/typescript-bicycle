@@ -14,7 +14,12 @@ export function useAxios(url: string, callBack: Function, params: string, setLoa
                         
                     }
                     if(params==="prem"){
-                        console.log(res.data.result);
+                         console.log(res.data.result);
+                        callBack(res.data.result.item_list)
+                        
+                    }
+                    if(params==="roleList"){
+                        console.log(res.data.result.menus);
                         callBack(res.data.result.item_list)
                         
                     }

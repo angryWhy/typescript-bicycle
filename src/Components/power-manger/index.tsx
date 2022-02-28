@@ -1,4 +1,4 @@
-import { Button, Card, Modal, Table } from 'antd'
+import { Button, Card, Table } from 'antd'
 import React, { memo, useState } from 'react'
 import { ColumnsType } from 'antd/lib/table';
 import { useAxios } from '../../utils/useAxios';
@@ -15,7 +15,8 @@ export interface User {
     status: string,
     allow_time: string,
     user_name: string,
-    key: React.Key
+    key: React.Key,
+    menus?:string[]
 }
 const Poewman: React.FC<PowProps> = memo(() => {
     const [data, setData] = useState<User[]>()
@@ -26,6 +27,8 @@ const Poewman: React.FC<PowProps> = memo(() => {
     const [creData, setCreData] = useState()
     const [treeData, setTreeData] = useState()
     const [comData, setComData] = useState()
+    const [selectRows, setselectedRows] = useState<User[] | User>()
+    const [selectedRowKeys, setselectedRowKeys] = useState<React.Key[]>()
     const columns: ColumnsType<User> = [
         {
             title: "角色ID",
@@ -58,34 +61,65 @@ const Poewman: React.FC<PowProps> = memo(() => {
     //获取创建表单的值
     const getCreateData = (value: any) => {
         setCreData(value)
-        console.log("创建表单用户的值",value);
-
+        console.log("创建表单用户的值", value);
     }
     //权限管理的值
     const getTreeeData = (value: any) => {
         setTreeData(value)
-        console.log("权限管理的值",value);
-
+        console.log("权限管理的值", value);
     }
     //编辑用户的值
     const getCompilerData = (value: any) => {
         setComData(value)
-        console.log("编辑用户的值",value);
-
+        console.log("编辑用户的值", value);
     }
+    const rowSelection = {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: User[] | User) => {
+          console.log("onChange事件触发");
+          
+          setselectedRowKeys(selectedRowKeys)
+          setselectedRows(selectedRows)
+          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+          console.log(selectedRowKeys);
+          
+        },
+        selectedRowKeys
+      }
     return (
         <div>
             <Card>
                 <Button style={{ margin: "0 20px" }} type="primary" onClick={e => { setCreShow(true) }}>创建角色</Button>
-                <Button style={{ margin: "0 20px" }} type="primary">设置权限</Button>
+                <Button style={{ margin: "0 20px" }} type="primary" onClick={e => { setTreeShow(true) }}>设置权限</Button>
                 <Button style={{ margin: "0 20px" }} type="primary">用户授权</Button>
             </Card>
             <Card>
-                <Table<User> columns={columns} dataSource={data} />
+                <Table<User>
+                    columns={columns}
+                    dataSource={data}
+                    rowSelection={{
+                        type: "radio",
+                        ...rowSelection,
+                      }}
+                      onRow={(record,index) => {
+                      //onRow，的index从0开始计算
+                        return {
+                          onClick:e=>{
+                            let asIndex = [index as number]
+                           
+                            // setselectedRowKeys([a])
+                            // setselectedRows(record)
+                            // console.log("行单击",selectedRowKeys);
+                            rowSelection.onChange(asIndex,record)
+                            
+                          }
+                        }
+                      }
+                      }
+                />
             </Card>
             <Create getCreateData={getCreateData} visible={creShow} setShow={setCreShow} />
-            <Premission getTreeeData={getTreeeData} visible={treeShow} setShow={setTreeShow}/>
-            <SetUser getCompilerData={getCompilerData} visible={comShow} setShow={setComShow}/>
+            <Premission getTreeeData={getTreeeData} visible={treeShow} setShow={setTreeShow} detail={selectRows!}/>
+            <SetUser getCompilerData={getCompilerData} visible={comShow} setShow={setComShow} />
         </div>
     )
 })

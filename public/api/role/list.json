@@ -13,7 +13,7 @@
       "allow_time": 1521270166000,
       "make_time": 1499305790000,
       "key":0,
-      "menus": ["/home", "/ui/buttons", "/ui/modals", "/ui/loadings", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
+      "menus": ["/home", "/ui/buttons", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel"]
     },
     {
       "id": 2,
@@ -23,7 +23,7 @@
       "allow_time": 1521270166000,
       "make_time": 1499305790000,
       "key":1,
-      "menus": ["/home", "/ui/buttons", "/ui/modals", "/ui/loadings", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
+      "menus": ["/home", "/ui/buttons",  "/ui/carousel"]
     },
     {
       "id": 3,
@@ -33,7 +33,7 @@
       "allow_time": 1521270166000,
       "make_time": 1499305790000,
       "key":2,
-      "menus": ["/home", "/ui/buttons", "/ui/modals", "/ui/loadings", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
+      "menus": ["/home", "/ui/buttons"]
     },
     {
       "id": 4,
@@ -43,7 +43,7 @@
       "allow_time": 1521270166000,
       "make_time": 1499305790000,
       "key":3,
-      "menus": ["/home", "/ui/buttons", "/ui/modals", "/ui/loadings", "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
+      "menus": [ "/ui/notification", "/ui/messages", "/ui/tabs", "/ui/gallery", "/ui/carousel", "/ui"]
     }
   ]
   }

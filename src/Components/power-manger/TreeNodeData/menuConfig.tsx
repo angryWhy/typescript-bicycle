@@ -1,4 +1,28 @@
-const routes = [
+// type ChildrenName = "children"
+// interface ChildItem{
+//     title:string,
+//     link:string,
+//     key?:string
+// }
+// interface Data {
+//     title:string,
+//     link:string,
+//     key?:string
+//     // children?:Record<ChildrenName,ChildItem>[]
+//     children?:ChildItem[]
+
+import { BasicDataNode } from "rc-tree/lib/interface";
+
+
+export interface DataNode extends BasicDataNode {
+    children?: DataNode[];
+    key?: string | number;
+    title?: React.ReactNode;
+    link?:string
+}
+
+// }
+const routes : DataNode[] = [
     {
         title: '首页',
         link: '/home'
@@ -80,16 +104,16 @@ const routes = [
     {
         title: '订单管理',
         link: '/order',
-        btnList: [
-            {
-                title: '订单详情',
-                link: 'detail'
-            },
-            {
-                title: '结束订单',
-                link: 'finish'
-            }
-        ]
+        // btnList: [
+        //     {
+        //         title: '订单详情',
+        //         link: 'detail'
+        //     },
+        //     {
+        //         title: '结束订单',
+        //         link: 'finish'
+        //     }
+        // ]
     },
     {
         title: '员工管理',
