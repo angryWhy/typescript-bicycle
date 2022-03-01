@@ -11,14 +11,11 @@ const TreeCpn: React.FunctionComponent<ITreeProps> = ({ roleList }) => {
     const role = roleList as User
     const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(role.menus!);
     const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
-    const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
-
-
-
     const onCheck = (checked: {
         checked: React.Key[];
         halfChecked: Key[];
     } | Key[]) => {
+        //父传子获取值，最后的tree值
         console.log('onCheck------', checked);
         const c = checked as Key[]
         setCheckedKeys(c);

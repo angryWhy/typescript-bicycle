@@ -85,12 +85,17 @@ const Poewman: React.FC<PowProps> = memo(() => {
         },
         selectedRowKeys
       }
+    //用户授权
+    const onCreate = (values: any) => {
+        console.log('Received values of form: ', values);
+        setComShow(false);
+    }
     return (
         <div>
             <Card>
                 <Button style={{ margin: "0 20px" }} type="primary" onClick={e => { setCreShow(true) }}>创建角色</Button>
                 <Button style={{ margin: "0 20px" }} type="primary" onClick={e => { setTreeShow(true) }}>设置权限</Button>
-                <Button style={{ margin: "0 20px" }} type="primary">用户授权</Button>
+                <Button style={{ margin: "0 20px" }} type="primary" onClick={e => { setComShow(true) }} >用户授权</Button>
             </Card>
             <Card>
                 <Table<User>
@@ -119,7 +124,7 @@ const Poewman: React.FC<PowProps> = memo(() => {
             </Card>
             <Create getCreateData={getCreateData} visible={creShow} setShow={setCreShow} />
             <Premission getTreeeData={getTreeeData} visible={treeShow} setShow={setTreeShow} detail={selectRows!}/>
-            <SetUser getCompilerData={getCompilerData} visible={comShow} setShow={setComShow} />
+            <SetUser getCompilerData={getCompilerData} visible={comShow} setShow={setComShow} onCreate={onCreate} onCancel={() => { setComShow(false) }}/>
         </div>
     )
 })
