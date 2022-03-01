@@ -1,10 +1,11 @@
-import { Button, Card, Table } from 'antd'
+import { Button, Card, Modal, Table } from 'antd'
 import React, { memo, useState } from 'react'
 import { ColumnsType } from 'antd/lib/table';
 import { useAxios } from '../../utils/useAxios';
 import Create from './createUser';
 import Premission from './premUser/index';
 import SetUser from './setUser/index';
+import CompileUser from '../user-manger/compileUser';
 interface PowProps {
 
 }
@@ -90,11 +91,22 @@ const Poewman: React.FC<PowProps> = memo(() => {
         console.log('Received values of form: ', values);
         setComShow(false);
     }
+    const handleCompile = () =>{
+        if(!selectRows){
+            Modal.info({
+                title: "提示",
+                content: "请选择"
+            })
+            return
+        }
+        setTreeShow(true) 
+        
+    } 
     return (
         <div>
             <Card>
                 <Button style={{ margin: "0 20px" }} type="primary" onClick={e => { setCreShow(true) }}>创建角色</Button>
-                <Button style={{ margin: "0 20px" }} type="primary" onClick={e => { setTreeShow(true) }}>设置权限</Button>
+                <Button style={{ margin: "0 20px" }} type="primary" onClick={e => {handleCompile() }}>设置权限</Button>
                 <Button style={{ margin: "0 20px" }} type="primary" onClick={e => { setComShow(true) }} >用户授权</Button>
             </Card>
             <Card>

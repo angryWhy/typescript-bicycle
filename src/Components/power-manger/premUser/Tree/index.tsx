@@ -20,9 +20,6 @@ const TreeCpn: React.FunctionComponent<ITreeProps> = ({ roleList }) => {
         const c = checked as Key[]
         setCheckedKeys(c);
     };
-
-
-
     const treeData = routes.map(item => {
         item.key = item.link
         if (item.children) {

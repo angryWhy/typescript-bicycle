@@ -49,7 +49,7 @@ const SetUser: React.FC<SetUserProps> = memo(({ getCompilerData, visible, setSho
     if(visible){
       getAuthUserList(mockData as filterParamsType)
     } 
-  }, [visible])
+  }, [visible,])
 
   return (
     <div>

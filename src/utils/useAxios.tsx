@@ -23,7 +23,9 @@ export function useAxios(url: string, callBack: Function, params: string, setLoa
                         callBack(res.data.result.item_list)
                         
                     }
-
+                    if(params==="transfer"){
+                        callBack(res.data.result)
+                    }
                     setTimeout(() => {
                         //head用户名
                         if (params === "name") {
