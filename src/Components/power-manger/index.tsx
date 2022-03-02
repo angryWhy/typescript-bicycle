@@ -122,7 +122,6 @@ const Poewman: React.FC<PowProps> = memo(() => {
                         return {
                           onClick:e=>{
                             let asIndex = [index as number]
-                           
                             // setselectedRowKeys([a])
                             // setselectedRows(record)
                             // console.log("行单击",selectedRowKeys);

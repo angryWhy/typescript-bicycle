@@ -16,7 +16,7 @@ interface Values {
 }
 
 type RoleType = { user_id: string; user_name: string; status: number; }[]
-type transferType = { key: string; title: string; status: number; }[]
+type transferType = { key: string; title: string; status: number;}[]
 //去除类型
 type filterParamsType =Exclude<UnionType,transferType>
 //30行，对数据进行添加属性

@@ -6,7 +6,7 @@ import { useAxios } from '../../utils/useAxios';
 interface bikepProps {
 
 }
-const Bike_Map :React.FC<bikepProps> = memo(() => {
+const BikeMap :React.FC<bikepProps> = memo(() => {
     const [data, setData] = useState<any>()
     const [mapData, setMapData] = useState()
     useAxios("./api/map/bike_list.json", setMapData, "mapData")
@@ -132,4 +132,4 @@ const Bike_Map :React.FC<bikepProps> = memo(() => {
     )
 })
 
-export default Bike_Map
+export default BikeMap
