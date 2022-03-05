@@ -24,7 +24,7 @@ export type OptionType = {
 export interface ItemType {
   type: string,
   label?: string,
-  //传入到封装组件，当做key值
+//传入到封装组件，当做key值
   name?: string,
   placeholder?: string,
   width?: string,

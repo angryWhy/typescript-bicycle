@@ -17,6 +17,6 @@ export default obj
 // // 若stack不存在，则返回空
 // return new Error().stack?.split('\n');
 
-// // 以上代码等同以下代码, 感谢 @dingyanhe 的监督
+// // 以上代码等同以下代码
 // const err = new Error();
 // return err.stack && err.stack.split('\n');

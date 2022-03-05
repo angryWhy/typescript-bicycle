@@ -88,12 +88,12 @@ const HeadCpn: React.FC<HeadProps> = memo(({ FormList,form,getData }) => {
                 }
                 <Form.Item>
                     <Button type='primary' style={{ marginLeft: "20px" }} onClick={e => {
-                        formRef.current!.getFieldsValue();
-                        console.log("HeadCpn.tsx,92行的LOG",formRef.current!.getFieldsValue());
-                        getData!(formRef.current!.getFieldsValue())
+                        formRef.current?.getFieldsValue();
+                        console.log("HeadCpn.tsx,92行的LOG",formRef.current?.getFieldsValue());
+                        // getData(formRef.current?.getFieldsValue())
                     }}>查询</Button>
                     <Button type='primary' style={{ marginLeft:  "20px" }} onClick={e => {
-                        formRef.current!.resetFields()
+                        formRef.current?.resetFields()
                     }}>重置</Button>
                 </Form.Item>
             </Form>

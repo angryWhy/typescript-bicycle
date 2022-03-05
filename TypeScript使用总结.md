@@ -8,6 +8,8 @@
 
 构造一个所有属性都`Type`设置为可选的类型。此实用程序将返回一个表示给定类型的所有子集的类型。
 
+ 注意这是浅 Partial 
+
 意思就是将类型集合，变成可选（title:string    =>    title?:string）
 
 ```typescript
@@ -76,6 +78,16 @@ const cats: Record<CatName, CatInfo> = {
   boris: { age: 5, breed: "Maine Coon" },
   mordred: { age: 16, breed: "British Shorthair" },
 };
+
+//用法，
+多用于取代object:Object
+    const object :Object
+    //用法
+    obj :Reacord<string,unknow>
+        //转换
+    Object=>Reacord<string,unknow>
+    //空对象
+    obj3: Record<string, never>
 ```
 
 
@@ -137,9 +149,25 @@ type T1 = Extract<string | number | (() => void), Function>;
 type T1 = () => void
 ```
 
+#### ReturnType<T>
+
+```
+它接受一个*函数类型*并产生它的返回类型
+type Predicate = (x: unknown) => boolean;
+type K = ReturnType<Predicate>;
+    
+type K = boolean
+
+function f() {
+  return { x: 10, y: 3 };
+}
+//取出类型
+type P = ReturnType<typeof f>
+```
 
 
-#### keyof，typeof
+
+#### keyof，typeof，is
 
 ```typescript
 keyof
@@ -172,9 +200,26 @@ type b = keyof typeof ColorsEnum
 typeof
 const obj = {a:1,0:"2"}
 typeof obj，显示 值 的类型
+
+
+function isString(test: any): test is string{
+    return typeof test === 'string';
+}
+
+function example(foo: number | string){
+    if(isString(foo)){
+        console.log('it is a string' + foo);
+        console.log(foo.length); // string function
+    }
+}
+example('hello world');
+//返回true则为
+is 为关键字的「类型谓语」把参数的类型范围缩小了,当使用了 test is string 之后,我们通过 isString(foo) === true 明确知道其中的参数是 string,而 boolean 并没有这个能力,这就是 is 关键字存在的意义.
 ```
 
 
+
+https://blog.csdn.net/u011607490/article/details/85410010?ops_request_misc=&request_id=&biz_id=102&utm_term=ts%E4%B8%AD%E7%9A%84is&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-85410010.nonecase&spm=1018.2226.3001.4187
 
 ### 类型断言
 
@@ -189,9 +234,18 @@ exp! , 的类型改变为number
 
 as为类型断言
 
-```
+```typescript
 type par = string | number
 type P = par as number
+//as const实现了从string | number到readonly [number, string]转化
+```
+
+as const断言
+
+```
+let array = ["12",567]  ,string | number类型
+let array = ["12",567] as const
+通过as const限定后，数组类型变为readonly [number, string]
 ```
 
 ?,问号使用场景
@@ -258,6 +312,36 @@ props(obj,"say")
 
 文档地址：https://blog.csdn.net/qq_45301392/article/details/118343769
 
+### 类型定义的建议
+
+- 对象类型尽量使用Record<string, unknown> 代替{} 和**object**
+
+    ```typescript
+    obj2Better1: Record<string, unknown>; // ✅  代替 obj: object
+    
+    obj2Better3: Record<string, never>; // ✅ 空对象
+    ```
+
+- 函数类型不建议直接给 Function 类型，有明确的参数类型、个数与返回值类型最佳
+
+    ```typescript
+    click : Function //任何可调用的函数
+    onChange: (id: number) => void; 
+    click:()=>void  // ✅ better ，明确参数无返回值的函数
+    onClick(event: React.MouseEvent<HTMLButtonElement>): void;
+    ```
+
+- React Prop 类型
+
+    ```
+    //
+    children: React.ReactNode; // ✅ best, 最佳接收所有 children 类型
+    //
+    functionChildren: (name: string) => React.ReactNode; // ✅ 返回 React 节点
+    ```
+
+    
+
 # 项目中
 
 ### 自定义组件，样式不生效？
@@ -320,6 +404,9 @@ const [count , setCount] = useState<number>()
 可以这样用
 
 ```typescript
+一些状态初始值为空时（null），需要显示地声明类型：
+const [user, setUser] = React.useState<User | null>(null)
+
 const [ data,setData] = useState<定义的类型>（）
 ```
 
@@ -371,6 +458,60 @@ function counterReducer(state: CountState, action: CountAction) ：CountState {
 ```
 
 用法：https://juejin.cn/post/6844903846607585293
+
+
+
+### hooks中useContext用法
+
+### Context和Reducer替代，redux
+
+```typescript
+interface AppContextInterface {
+    state: typeof initialState;
+    dispatch: React.Dispatch<ACTIONTYPE>;
+}
+//可以定义Action
+const AppCtx = React.createContext<AppContextInterface>({
+    state: initialState,
+    dispatch: (action) => action,
+});
+const App = (): React.ReactNode => {
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    return (
+        <AppCtx.Provider value={{ state, dispatch }}>
+            <Counter />
+        </AppCtx.Provider>
+    );
+};
+
+// 消费 context
+function Counter() {
+    const { state, dispatch } = React.useContext(AppCtx);
+    return (
+        <>
+            Count: {state.count}
+            <button onClick={() => dispatch({ type: 'decrement', payload: '5' })}>-</button>
+            <button onClick={() => dispatch({ type: 'increment', payload: 5 })}>+</button>
+        </>
+    );
+}
+
+```
+
+
+
+### hooks中useRef用法
+
+```typescript
+const ref1 = React.useRef<HTMLInputElement>(null)
+
+const ref2 = React.useRef<HTMLInputElement | null>(null)
+//第一种方式的 ref1.current 是只读的（read-only），并且可以传递给内置的 ref 属性，绑定 DOM 元素 ；
+//第二种方式的 ref2.current 是可变的（类似于声明类的成员变量）
+//使用时，都需要对类型进行检查:
+ref1.current?.focus()
+```
 
 
 

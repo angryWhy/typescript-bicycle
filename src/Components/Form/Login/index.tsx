@@ -55,7 +55,6 @@ const Login: React.FC<LoginProps> = memo(() => {
             </Card>
             <Card title="行内表单">
                 <Form
-
                     labelCol={{ span: 6 }}
                     wrapperCol={{ span: 14 }}
                     initialValues={{ remember: true }}

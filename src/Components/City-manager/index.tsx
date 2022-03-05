@@ -37,7 +37,6 @@ const CityCpn: React.FC<CityProps> = memo(() => {
     const [loading, setLoading] = useState<boolean>(false)
     const [subShow, setSubShow] = useState<boolean>(false)
     const subRef = useRef<FormInstance>()
-    const [subData,setSubData] = useState()
     useAxios("./api/city/list.json", setData, "Citylist", setLoading)
     const columns: ColumnsType<City> = [
         {

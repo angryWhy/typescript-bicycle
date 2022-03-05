@@ -21,8 +21,8 @@ const Premission: React.FC<PremissionProps> = memo(({ getTreeeData, visible, set
   }
   const handleOk = () => {
     //对象可能为 "null",使用!
-    const value = formRef.current!.getFieldsValue()
-    formRef.current!.resetFields()
+    const value = formRef.current?.getFieldsValue()
+    formRef.current?.resetFields()
     getTreeeData(value)
     setShow(false)
   }  
@@ -40,7 +40,7 @@ const Premission: React.FC<PremissionProps> = memo(({ getTreeeData, visible, set
     <Modal title="用户授权"
       okText="提交"
       cancelText="取消"
-      onCancel={e => { setShow(false);formRef.current!.resetFields();setTreeShow(false) }}
+      onCancel={e => { setShow(false);formRef.current?.resetFields();setTreeShow(false) }}
       onOk={e => { handleOk() ;setTreeShow(false)}}
       visible={visible}>
       <Form ref={formRef} >

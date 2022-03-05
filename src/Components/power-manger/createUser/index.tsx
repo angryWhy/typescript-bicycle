@@ -17,7 +17,7 @@ const Create: React.FC<CreateProps> = memo(({getCreateData,visible,setShow}) => 
   }
   const handleOk = () => {
     //对象可能为 "null",使用!
-    const value = formRef.current!.getFieldsValue()
+    const value = formRef.current?.getFieldsValue()
     getCreateData(value)
     setShow(false)
   }
